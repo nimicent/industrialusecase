@@ -1,0 +1,646 @@
+[
+    {
+        "id": "73cf0f7ec6f2cd97",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "29db92b59af5a7b8",
+        "type": "inject",
+        "z": "73cf0f7ec6f2cd97",
+        "name": "Message",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "sensorconfig",
+        "payloadType": "date",
+        "x": 220,
+        "y": 80,
+        "wires": [
+            [
+                "2ba561d985e56704"
+            ]
+        ]
+    },
+    {
+        "id": "2ba561d985e56704",
+        "type": "function",
+        "z": "73cf0f7ec6f2cd97",
+        "name": "jrn - sensors",
+        "func": "msg.payload = [{\n    temperature : Math.round(Math.random() * (25 - 15) + 15),\n    timestamp: new Date().toISOString(),\n    deviceid : \"sensor-1\"\n}, {\n    temperature : Math.round(Math.random() * (25 - 15) + 15),\n    timestamp: new Date().toISOString(),\n    deviceid : \"sensor-2\"\n}, {\n    temperature : Math.round(Math.random() * (25 - 15) + 15),\n    timestamp: new Date().toISOString(),\n    deviceid : \"sensor-3\"\n}]\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 80,
+        "wires": [
+            [
+                "ec4b64c6062ecdbe",
+                "f74e9d2f90082035"
+            ]
+        ]
+    },
+    {
+        "id": "9849e54fe5694f07",
+        "type": "mqtt out",
+        "z": "73cf0f7ec6f2cd97",
+        "name": "Send",
+        "topic": "sensors",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "77ad471e7d4cbab1",
+        "x": 710,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "863d8ad68a903bed",
+        "type": "mqtt out",
+        "z": "73cf0f7ec6f2cd97",
+        "name": "Send",
+        "topic": "sensors",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "77ad471e7d4cbab1",
+        "x": 710,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "cf1ec51001ab43a7",
+        "type": "function",
+        "z": "73cf0f7ec6f2cd97",
+        "name": "jrn - sensor-1",
+        "func": "msg.payload = {\n    temperature: Math.round(Math.random() * (25 - 15) + 15),\n    timestamp: new Date().toISOString(),\n    deviceid : \"sensor-1\"\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 180,
+        "wires": [
+            [
+                "678a06c219b0d578",
+                "0b5dc083a362aa2c"
+            ]
+        ]
+    },
+    {
+        "id": "daa5ca0dd1a7f9fc",
+        "type": "inject",
+        "z": "73cf0f7ec6f2cd97",
+        "name": "Message",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "sensor1",
+        "payloadType": "date",
+        "x": 220,
+        "y": 180,
+        "wires": [
+            [
+                "cf1ec51001ab43a7"
+            ]
+        ]
+    },
+    {
+        "id": "b67ff4126396cec2",
+        "type": "function",
+        "z": "73cf0f7ec6f2cd97",
+        "name": "jrn - sensor-2",
+        "func": "msg.payload = {\n    temperature: Math.round(Math.random() * (25 - 15) + 15),\n    timestamp: new Date().toISOString(),\n    deviceid : \"sensor-2\"\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 280,
+        "wires": [
+            [
+                "9849e54fe5694f07",
+                "730705dfe492bad9"
+            ]
+        ]
+    },
+    {
+        "id": "914ed51caa5c713f",
+        "type": "inject",
+        "z": "73cf0f7ec6f2cd97",
+        "name": "Message",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "sensor2",
+        "payloadType": "date",
+        "x": 220,
+        "y": 280,
+        "wires": [
+            [
+                "b67ff4126396cec2"
+            ]
+        ]
+    },
+    {
+        "id": "a6763cdb19cf8434",
+        "type": "http request",
+        "z": "73cf0f7ec6f2cd97",
+        "name": "Sensor-1 reading from BF App",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://bfapp-julia.juliacluster-cluster-77ca64132b7f071e568fd6d109a47fc9-0000.upi.containers.appdomain.cloud/readings?deviceId=sensor-1",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 470,
+        "y": 520,
+        "wires": [
+            [
+                "8a48ece664de2c59",
+                "13403aa7b25bc7da",
+                "4143401581ea585b"
+            ]
+        ]
+    },
+    {
+        "id": "79f155808308f169",
+        "type": "function",
+        "z": "73cf0f7ec6f2cd97",
+        "name": "jrn - sensor-3",
+        "func": "msg.payload = {\n    temperature: Math.round(Math.random() * (25 - 15) + 15),\n    timestamp: new Date().toISOString(),\n    deviceid : \"sensor-3\"\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 400,
+        "wires": [
+            [
+                "863d8ad68a903bed",
+                "2d7c65b13336fd71"
+            ]
+        ]
+    },
+    {
+        "id": "744a72f8acb896b0",
+        "type": "inject",
+        "z": "73cf0f7ec6f2cd97",
+        "name": "Message",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "sensor3",
+        "payloadType": "date",
+        "x": 220,
+        "y": 400,
+        "wires": [
+            [
+                "79f155808308f169"
+            ]
+        ]
+    },
+    {
+        "id": "678a06c219b0d578",
+        "type": "mqtt out",
+        "z": "73cf0f7ec6f2cd97",
+        "name": "Send",
+        "topic": "sensors",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "77ad471e7d4cbab1",
+        "x": 710,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "ec4b64c6062ecdbe",
+        "type": "mqtt out",
+        "z": "73cf0f7ec6f2cd97",
+        "name": "Send",
+        "topic": "sensors",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "77ad471e7d4cbab1",
+        "x": 710,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "8a48ece664de2c59",
+        "type": "debug",
+        "z": "73cf0f7ec6f2cd97",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "d73afcb3c970085c",
+        "type": "http request",
+        "z": "73cf0f7ec6f2cd97",
+        "name": "Sensor-2 reading from BF App",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://bfapp-julia.juliacluster-cluster-77ca64132b7f071e568fd6d109a47fc9-0000.upi.containers.appdomain.cloud/readings?deviceId=sensor-2",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 470,
+        "y": 580,
+        "wires": [
+            [
+                "3f4cd1cd1ae907a9",
+                "f005e455b3bf9d74"
+            ]
+        ]
+    },
+    {
+        "id": "4477a7b49446add4",
+        "type": "http request",
+        "z": "73cf0f7ec6f2cd97",
+        "name": "Sensor-3 reading from BF App",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://bfapp-julia.juliacluster-cluster-77ca64132b7f071e568fd6d109a47fc9-0000.upi.containers.appdomain.cloud/readings?deviceId=sensor-3",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 470,
+        "y": 640,
+        "wires": [
+            [
+                "44e0499a7d127b19",
+                "0e3634c7e33846c4"
+            ]
+        ]
+    },
+    {
+        "id": "f005e455b3bf9d74",
+        "type": "debug",
+        "z": "73cf0f7ec6f2cd97",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "0e3634c7e33846c4",
+        "type": "debug",
+        "z": "73cf0f7ec6f2cd97",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "7dd2af34de861caf",
+        "type": "inject",
+        "z": "73cf0f7ec6f2cd97",
+        "name": "Message",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "sensor2",
+        "payloadType": "date",
+        "x": 220,
+        "y": 540,
+        "wires": [
+            [
+                "a6763cdb19cf8434",
+                "d73afcb3c970085c",
+                "4477a7b49446add4"
+            ]
+        ]
+    },
+    {
+        "id": "13403aa7b25bc7da",
+        "type": "ui_gauge",
+        "z": "73cf0f7ec6f2cd97",
+        "name": "",
+        "group": "5e948f10c8e26d42",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "sensor-1",
+        "label": "units",
+        "format": "{{msg.payload.value.temperature}}",
+        "min": 0,
+        "max": "25",
+        "colors": [
+            "#88a9e0",
+            "#e2e678",
+            "#dd7768"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 720,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "3f4cd1cd1ae907a9",
+        "type": "ui_gauge",
+        "z": "73cf0f7ec6f2cd97",
+        "name": "",
+        "group": "5e948f10c8e26d42",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "sensor-2",
+        "label": "units",
+        "format": "{{msg.payload.value.temperature}}",
+        "min": 0,
+        "max": "25",
+        "colors": [
+            "#88a9e0",
+            "#e2e678",
+            "#dd7768"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 720,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "44e0499a7d127b19",
+        "type": "ui_gauge",
+        "z": "73cf0f7ec6f2cd97",
+        "name": "",
+        "group": "5e948f10c8e26d42",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "sensor-3",
+        "label": "units",
+        "format": "{{msg.payload.value.temperature}}",
+        "min": 0,
+        "max": "25",
+        "colors": [
+            "#88a9e0",
+            "#e2e678",
+            "#dd7768"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 720,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "4143401581ea585b",
+        "type": "ui_ui_control",
+        "z": "73cf0f7ec6f2cd97",
+        "name": "",
+        "events": "all",
+        "x": 720,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2d7c65b13336fd71",
+        "type": "debug",
+        "z": "73cf0f7ec6f2cd97",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "730705dfe492bad9",
+        "type": "debug",
+        "z": "73cf0f7ec6f2cd97",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "0b5dc083a362aa2c",
+        "type": "debug",
+        "z": "73cf0f7ec6f2cd97",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "f74e9d2f90082035",
+        "type": "debug",
+        "z": "73cf0f7ec6f2cd97",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "77ad471e7d4cbab1",
+        "type": "mqtt-broker",
+        "name": "Dec1st",
+        "broker": "mosquitto-ephemeral-tls-julia.juliacluster-cluster-77ca64132b7f071e568fd6d109a47fc9-0000.upi.containers.appdomain.cloud",
+        "port": "443",
+        "tls": "42e8f2f61722cfc0",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": true,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "5e948f10c8e26d42",
+        "type": "ui_group",
+        "name": "Dashboard",
+        "tab": "c3a235d4914b4841",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "42e8f2f61722cfc0",
+        "type": "tls-config",
+        "name": "dec1st",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "mosquitto_ca.crt",
+        "servername": "mosquitto-ephemeral-tls",
+        "verifyservercert": false,
+        "alpnprotocol": ""
+    },
+    {
+        "id": "c3a235d4914b4841",
+        "type": "ui_tab",
+        "name": "Gauges",
+        "icon": "star",
+        "disabled": false,
+        "hidden": false
+    }
+]
